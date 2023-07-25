@@ -1,4 +1,3 @@
-
 import '../datasource/answer_remote_datasource.dart';
 import '../model/answer_model.dart';
 
@@ -9,22 +8,16 @@ class AnswerRepository {
     this._remoteDatasource,
   );
 
-  Future<List<AnswerModel>> getAnswer() async {
+  Future<AnswerModel> getAnswer() async {
     try {
-      final remoteDtos = (await _remoteDatasource.getAnswer())
-          .map(
-            (dto) => AnswerModel(
-              text: dto.text,
-            ),
-          )
-          .toList();
-
-
-      final resultList = remoteDtos;
-      return resultList;
+      final remoteDto = (await _remoteDatasource.getAnswer());
+      final answer = AnswerModel(
+        text: remoteDto.text,
+      );
+      return answer;
     } catch (e) {
-      print(e);
-      return [];
+//      print(e);
+      return AnswerModel(text: 'error');
     }
   }
 }

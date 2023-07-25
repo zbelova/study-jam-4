@@ -22,8 +22,8 @@ class AnswerBloc extends Bloc<AnswerEvent, AnswerState> {
       Emitter emit,
       ) async {
     emit(const AnswerState.loading());
-    final posts = await _answerRepository.getAnswer();
+    final answer = await _answerRepository.getAnswer();
 
-    emit(AnswerState.fetched(posts: posts));
+    emit(AnswerState.fetched(answer: answer));
   }
 }

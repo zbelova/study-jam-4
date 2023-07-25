@@ -169,21 +169,21 @@ mixin _$AnswerState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<AnswerModel> posts) fetched,
+    required TResult Function(AnswerModel answer) fetched,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<AnswerModel> posts)? fetched,
+    TResult? Function(AnswerModel answer)? fetched,
     TResult? Function()? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<AnswerModel> posts)? fetched,
+    TResult Function(AnswerModel answer)? fetched,
     TResult Function()? error,
     required TResult orElse(),
   }) =>
@@ -268,7 +268,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<AnswerModel> posts) fetched,
+    required TResult Function(AnswerModel answer) fetched,
     required TResult Function() error,
   }) {
     return loading();
@@ -278,7 +278,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<AnswerModel> posts)? fetched,
+    TResult? Function(AnswerModel answer)? fetched,
     TResult? Function()? error,
   }) {
     return loading?.call();
@@ -288,7 +288,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<AnswerModel> posts)? fetched,
+    TResult Function(AnswerModel answer)? fetched,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -343,7 +343,9 @@ abstract class _$$_FetchedCopyWith<$Res> {
           _$_Fetched value, $Res Function(_$_Fetched) then) =
       __$$_FetchedCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<AnswerModel> posts});
+  $Res call({AnswerModel answer});
+
+  $AnswerModelCopyWith<$Res> get answer;
 }
 
 /// @nodoc
@@ -356,33 +358,36 @@ class __$$_FetchedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? posts = null,
+    Object? answer = null,
   }) {
     return _then(_$_Fetched(
-      posts: null == posts
-          ? _value._posts
-          : posts // ignore: cast_nullable_to_non_nullable
-              as List<AnswerModel>,
+      answer: null == answer
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
+              as AnswerModel,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AnswerModelCopyWith<$Res> get answer {
+    return $AnswerModelCopyWith<$Res>(_value.answer, (value) {
+      return _then(_value.copyWith(answer: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_Fetched implements _Fetched {
-  const _$_Fetched({required final List<AnswerModel> posts}) : _posts = posts;
+  const _$_Fetched({required this.answer});
 
-  final List<AnswerModel> _posts;
   @override
-  List<AnswerModel> get posts {
-    if (_posts is EqualUnmodifiableListView) return _posts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_posts);
-  }
+  final AnswerModel answer;
 
   @override
   String toString() {
-    return 'AnswerState.fetched(posts: $posts)';
+    return 'AnswerState.fetched(answer: $answer)';
   }
 
   @override
@@ -390,12 +395,11 @@ class _$_Fetched implements _Fetched {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Fetched &&
-            const DeepCollectionEquality().equals(other._posts, _posts));
+            (identical(other.answer, answer) || other.answer == answer));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_posts));
+  int get hashCode => Object.hash(runtimeType, answer);
 
   @JsonKey(ignore: true)
   @override
@@ -407,32 +411,32 @@ class _$_Fetched implements _Fetched {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<AnswerModel> posts) fetched,
+    required TResult Function(AnswerModel answer) fetched,
     required TResult Function() error,
   }) {
-    return fetched(posts);
+    return fetched(answer);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<AnswerModel> posts)? fetched,
+    TResult? Function(AnswerModel answer)? fetched,
     TResult? Function()? error,
   }) {
-    return fetched?.call(posts);
+    return fetched?.call(answer);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<AnswerModel> posts)? fetched,
+    TResult Function(AnswerModel answer)? fetched,
     TResult Function()? error,
     required TResult orElse(),
   }) {
     if (fetched != null) {
-      return fetched(posts);
+      return fetched(answer);
     }
     return orElse();
   }
@@ -473,9 +477,9 @@ class _$_Fetched implements _Fetched {
 }
 
 abstract class _Fetched implements AnswerState {
-  const factory _Fetched({required final List<AnswerModel> posts}) = _$_Fetched;
+  const factory _Fetched({required final AnswerModel answer}) = _$_Fetched;
 
-  List<AnswerModel> get posts;
+  AnswerModel get answer;
   @JsonKey(ignore: true)
   _$$_FetchedCopyWith<_$_Fetched> get copyWith =>
       throw _privateConstructorUsedError;
@@ -518,7 +522,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<AnswerModel> posts) fetched,
+    required TResult Function(AnswerModel answer) fetched,
     required TResult Function() error,
   }) {
     return error();
@@ -528,7 +532,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<AnswerModel> posts)? fetched,
+    TResult? Function(AnswerModel answer)? fetched,
     TResult? Function()? error,
   }) {
     return error?.call();
@@ -538,7 +542,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<AnswerModel> posts)? fetched,
+    TResult Function(AnswerModel answer)? fetched,
     TResult Function()? error,
     required TResult orElse(),
   }) {
