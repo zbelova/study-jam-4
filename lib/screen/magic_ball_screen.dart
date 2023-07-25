@@ -15,7 +15,7 @@ class MagicBallScreen extends StatefulWidget {
 
 class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderStateMixin {
   //анимация появления шара
-  late AnimationController _changeBallController;
+  late AnimationController _changeFadeController;
   late Animation _fadeAnimation;
 
   //анимация плавающего шара
@@ -26,16 +26,16 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
   void initState() {
     super.initState();
     //описание анимации появления шара
-    _changeBallController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _changeFadeController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: _changeBallController,
+      parent: _changeFadeController,
       curve: Curves.easeIn,
     ));
     //запуск анимации появления шара
-    _changeBallController.addListener(() {
+    _changeFadeController.addListener(() {
       setState(() {});
     });
-    _changeBallController.forward();
+    _changeFadeController.forward();
 
     //описание анимации плавающего шара
     _floatBallController = AnimationController(vsync: this, duration: const Duration(seconds: 3));
@@ -53,7 +53,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
   @override
   void dispose() {
     //остановка анимаций и контроллеров
-    _changeBallController.dispose();
+    _changeFadeController.dispose();
     _floatBallController.dispose();
     super.dispose();
   }
@@ -90,14 +90,14 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
                         //изменение состояния анимации фейда при изменении состояния блока
                         state.maybeWhen(
                           orElse: () {
-                            _changeBallController.reverse(from: 0.5);
-                            _changeBallController.forward(from: 0.5);
+                            _changeFadeController.reverse(from: 0.5);
+                            _changeFadeController.forward(from: 0.5);
                           },
                           loading: () {
-                            _changeBallController.reverse();
+                            _changeFadeController.reverse();
                           },
                           fetched: (fetched) {
-                            _changeBallController.forward();
+                            _changeFadeController.forward();
                             _floatBallController.stop();
                           },
 
@@ -239,7 +239,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
           context.read<AnswerBloc>().add(
                 const AnswerEvent.fetchData(),
               );
-          _changeBallController.forward(from: 0);
+          _changeFadeController.forward(from: 0);
         },
         //прозрачность анимируется
         child: Opacity(
