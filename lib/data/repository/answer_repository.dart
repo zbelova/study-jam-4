@@ -16,7 +16,6 @@ class AnswerRepository {
       );
       return answer;
     } catch (e) {
-//      print(e);
       return AnswerModel(text: 'error');
     }
   }

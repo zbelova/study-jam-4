@@ -20,7 +20,6 @@ class AnswerRemoteDatasource {
     } catch (e) {
       return const AnswerDto(text: 'error');
     }
-
   }
 }
 

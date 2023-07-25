@@ -23,7 +23,10 @@ class AnswerBloc extends Bloc<AnswerEvent, AnswerState> {
       ) async {
     emit(const AnswerState.loading());
     final answer = await _answerRepository.getAnswer();
-
+    if(answer.text == 'error') {
+      emit(const AnswerState.error());
+      return;
+    }
     emit(AnswerState.fetched(answer: answer));
   }
 }
