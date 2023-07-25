@@ -100,6 +100,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
                             _changeBallController.forward();
                             _floatBallController.stop();
                           },
+
                         );
                       },
                       builder: (context, state) {
@@ -238,6 +239,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
           context.read<AnswerBloc>().add(
                 const AnswerEvent.fetchData(),
               );
+          _changeBallController.forward(from: 0);
         },
         //прозрачность анимируется
         child: Opacity(
