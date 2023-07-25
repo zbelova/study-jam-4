@@ -12,7 +12,7 @@ part 'answer_state.dart';
 class AnswerBloc extends Bloc<AnswerEvent, AnswerState> {
   final AnswerRepository _answerRepository;
 
-  AnswerBloc(this._answerRepository) : super(const AnswerState.loading()) {
+  AnswerBloc(this._answerRepository) : super(const AnswerState.start()) {
     on<_FetchData>(_onFetchData);
   }
 

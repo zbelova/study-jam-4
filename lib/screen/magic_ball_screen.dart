@@ -47,7 +47,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
     _floatAnimation.addListener(() {
       setState(() {});
     });
-    _floatBallController.forward();
+    _floatBallController.repeat(reverse: true);
   }
 
   @override
@@ -87,7 +87,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
                     ),
                     child: BlocConsumer<AnswerBloc, AnswerState>(
                       listener: (context, state) {
-                        //изменение состояния анимации при изменении состояния блока
+                        //изменение состояния анимации фейда при изменении состояния блока
                         state.maybeWhen(
                           orElse: () {
                             _changeBallController.reverse(from: 0.5);
@@ -95,18 +95,22 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
                           },
                           loading: () {
                             _changeBallController.reverse();
-                            _floatBallController.stop();
                           },
                           fetched: (fetched) {
                             _changeBallController.forward();
+                            _floatBallController.stop();
                           },
                         );
                       },
                       builder: (context, state) {
                         return state.map(
-                          loading: (_) {
+                          start: (_) {
                             //отображение шара с загрузкой и начального состояния
                             return _buildInitialBall();
+                          },
+                          loading: (_) {
+                            //отображение шара с загрузкой и начального состояния
+                            return _buildLoadingBall();
                           },
                           fetched: (fetched) {
                             //отображение шара с ответом
@@ -120,7 +124,6 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
                       },
                     ),
                   ),
-
                   SizedBox(
                     width: MediaQuery.of(context).size.width - 150,
                     child: const Text(
@@ -132,10 +135,9 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   )
-                  // const Spacer()
                 ],
               ),
             ),
@@ -191,6 +193,9 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
                         fit: BoxFit.fitWidth,
                         //свечение текста
                         child: GlowText(
+                          blurRadius: 20,
+                          softWrap: true,
+                          offset: const Offset(0, 0),
                           answer!.text,
                           style: const TextStyle(
                             color: Color(0xFF99E0FF),
@@ -202,9 +207,9 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
                   ),
                 ),
                 SizedBox(
-                  child: Image.asset('lib/assets/ellipse_blue.png'),
                   width: 300,
                   height: 100,
+                  child: Image.asset('lib/assets/ellipse_blue.png'),
                 ),
               ],
             ),
@@ -261,6 +266,35 @@ class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderSt
               ),
             ],
           ),
+        ),
+      );
+    });
+  }
+
+  Widget _buildLoadingBall() {
+    return Builder(builder: (context) {
+      return Opacity(
+        opacity: _fadeAnimation.value,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 100,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width - 20,
+              height: MediaQuery.of(context).size.height - 300,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('lib/assets/magic_ball_clear.png'),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 300,
+              height: 100,
+              child: Image.asset('lib/assets/ellipse_blue.png'),
+            ),
+          ],
         ),
       );
     });

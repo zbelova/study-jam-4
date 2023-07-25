@@ -168,6 +168,7 @@ abstract class _FetchData implements AnswerEvent {
 mixin _$AnswerState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() start,
     required TResult Function() loading,
     required TResult Function(AnswerModel answer) fetched,
     required TResult Function() error,
@@ -175,6 +176,7 @@ mixin _$AnswerState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? start,
     TResult? Function()? loading,
     TResult? Function(AnswerModel answer)? fetched,
     TResult? Function()? error,
@@ -182,6 +184,7 @@ mixin _$AnswerState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? start,
     TResult Function()? loading,
     TResult Function(AnswerModel answer)? fetched,
     TResult Function()? error,
@@ -190,6 +193,7 @@ mixin _$AnswerState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Start value) start,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Fetched value) fetched,
     required TResult Function(_Error value) error,
@@ -197,6 +201,7 @@ mixin _$AnswerState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Start value)? start,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Fetched value)? fetched,
     TResult? Function(_Error value)? error,
@@ -204,6 +209,7 @@ mixin _$AnswerState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Start value)? start,
     TResult Function(_Loading value)? loading,
     TResult Function(_Fetched value)? fetched,
     TResult Function(_Error value)? error,
@@ -228,6 +234,118 @@ class _$AnswerStateCopyWithImpl<$Res, $Val extends AnswerState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_StartCopyWith<$Res> {
+  factory _$$_StartCopyWith(_$_Start value, $Res Function(_$_Start) then) =
+      __$$_StartCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_StartCopyWithImpl<$Res>
+    extends _$AnswerStateCopyWithImpl<$Res, _$_Start>
+    implements _$$_StartCopyWith<$Res> {
+  __$$_StartCopyWithImpl(_$_Start _value, $Res Function(_$_Start) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Start implements _Start {
+  const _$_Start();
+
+  @override
+  String toString() {
+    return 'AnswerState.start()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Start);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() start,
+    required TResult Function() loading,
+    required TResult Function(AnswerModel answer) fetched,
+    required TResult Function() error,
+  }) {
+    return start();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? start,
+    TResult? Function()? loading,
+    TResult? Function(AnswerModel answer)? fetched,
+    TResult? Function()? error,
+  }) {
+    return start?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? start,
+    TResult Function()? loading,
+    TResult Function(AnswerModel answer)? fetched,
+    TResult Function()? error,
+    required TResult orElse(),
+  }) {
+    if (start != null) {
+      return start();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Start value) start,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Fetched value) fetched,
+    required TResult Function(_Error value) error,
+  }) {
+    return start(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Start value)? start,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Fetched value)? fetched,
+    TResult? Function(_Error value)? error,
+  }) {
+    return start?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Start value)? start,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Fetched value)? fetched,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (start != null) {
+      return start(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Start implements AnswerState {
+  const factory _Start() = _$_Start;
 }
 
 /// @nodoc
@@ -267,6 +385,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() start,
     required TResult Function() loading,
     required TResult Function(AnswerModel answer) fetched,
     required TResult Function() error,
@@ -277,6 +396,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? start,
     TResult? Function()? loading,
     TResult? Function(AnswerModel answer)? fetched,
     TResult? Function()? error,
@@ -287,6 +407,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? start,
     TResult Function()? loading,
     TResult Function(AnswerModel answer)? fetched,
     TResult Function()? error,
@@ -301,6 +422,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Start value) start,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Fetched value) fetched,
     required TResult Function(_Error value) error,
@@ -311,6 +433,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Start value)? start,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Fetched value)? fetched,
     TResult? Function(_Error value)? error,
@@ -321,6 +444,7 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Start value)? start,
     TResult Function(_Loading value)? loading,
     TResult Function(_Fetched value)? fetched,
     TResult Function(_Error value)? error,
@@ -410,6 +534,7 @@ class _$_Fetched implements _Fetched {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() start,
     required TResult Function() loading,
     required TResult Function(AnswerModel answer) fetched,
     required TResult Function() error,
@@ -420,6 +545,7 @@ class _$_Fetched implements _Fetched {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? start,
     TResult? Function()? loading,
     TResult? Function(AnswerModel answer)? fetched,
     TResult? Function()? error,
@@ -430,6 +556,7 @@ class _$_Fetched implements _Fetched {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? start,
     TResult Function()? loading,
     TResult Function(AnswerModel answer)? fetched,
     TResult Function()? error,
@@ -444,6 +571,7 @@ class _$_Fetched implements _Fetched {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Start value) start,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Fetched value) fetched,
     required TResult Function(_Error value) error,
@@ -454,6 +582,7 @@ class _$_Fetched implements _Fetched {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Start value)? start,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Fetched value)? fetched,
     TResult? Function(_Error value)? error,
@@ -464,6 +593,7 @@ class _$_Fetched implements _Fetched {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Start value)? start,
     TResult Function(_Loading value)? loading,
     TResult Function(_Fetched value)? fetched,
     TResult Function(_Error value)? error,
@@ -521,6 +651,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() start,
     required TResult Function() loading,
     required TResult Function(AnswerModel answer) fetched,
     required TResult Function() error,
@@ -531,6 +662,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? start,
     TResult? Function()? loading,
     TResult? Function(AnswerModel answer)? fetched,
     TResult? Function()? error,
@@ -541,6 +673,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? start,
     TResult Function()? loading,
     TResult Function(AnswerModel answer)? fetched,
     TResult Function()? error,
@@ -555,6 +688,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Start value) start,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Fetched value) fetched,
     required TResult Function(_Error value) error,
@@ -565,6 +699,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Start value)? start,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Fetched value)? fetched,
     TResult? Function(_Error value)? error,
@@ -575,6 +710,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Start value)? start,
     TResult Function(_Loading value)? loading,
     TResult Function(_Fetched value)? fetched,
     TResult Function(_Error value)? error,
