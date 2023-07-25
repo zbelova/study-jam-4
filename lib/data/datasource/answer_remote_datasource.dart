@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import '../dto/answer_response.dart';
 
+//класс для получения данных ответа с сервера
 class AnswerRemoteDatasource {
   final Dio _dio;
-
 
   AnswerRemoteDatasource(this._dio);
 

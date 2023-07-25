@@ -13,41 +13,48 @@ class MagicBallScreen extends StatefulWidget {
   State<MagicBallScreen> createState() => _MagicBallScreenState();
 }
 
-class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProviderStateMixin {
+class _MagicBallScreenState extends State<MagicBallScreen> with TickerProviderStateMixin {
+  //анимация появления шара
   late AnimationController _changeBallController;
   late Animation _fadeAnimation;
+
+  //анимация плавающего шара
+  late AnimationController _floatBallController;
+  late Animation _floatAnimation;
 
   @override
   void initState() {
     super.initState();
+    //описание анимации появления шара
     _changeBallController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       parent: _changeBallController,
       curve: Curves.easeIn,
     ));
+    //запуск анимации появления шара
     _changeBallController.addListener(() {
       setState(() {});
     });
     _changeBallController.forward();
-    ShakeDetector detector = ShakeDetector.autoStart(
-      onPhoneShake: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Shake!'),
-          ),
-        );
-        // Do stuff on phone shake
-      },
-      minimumShakeCount: 1,
-      shakeSlopTimeMS: 500,
-      shakeCountResetTime: 3000,
-      shakeThresholdGravity: 2.7,
-    );
+
+    //описание анимации плавающего шара
+    _floatBallController = AnimationController(vsync: this, duration: const Duration(seconds: 3));
+    _floatAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+      parent: _floatBallController,
+      curve: Curves.easeInOut,
+    ));
+    //запуск анимации плавающего шара
+    _floatAnimation.addListener(() {
+      setState(() {});
+    });
+    _floatBallController.forward();
   }
 
   @override
   void dispose() {
+    //остановка анимаций и контроллеров
     _changeBallController.dispose();
+    _floatBallController.dispose();
     super.dispose();
   }
 
@@ -73,12 +80,14 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
               child: Column(
                 children: [
                   const Spacer(),
+                  //подключение блока
                   BlocProvider(
                     create: (context) => AnswerBloc(
                       GetIt.I.get(),
                     ),
                     child: BlocConsumer<AnswerBloc, AnswerState>(
                       listener: (context, state) {
+                        //изменение состояния анимации при изменении состояния блока
                         state.maybeWhen(
                           orElse: () {
                             _changeBallController.reverse(from: 0.5);
@@ -86,6 +95,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
                           },
                           loading: () {
                             _changeBallController.reverse();
+                            _floatBallController.stop();
                           },
                           fetched: (fetched) {
                             _changeBallController.forward();
@@ -98,19 +108,19 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
                             //отображение шара с загрузкой и начального состояния
                             return _buildInitialBall();
                           },
-                          //отображение шара с ответом
                           fetched: (fetched) {
+                            //отображение шара с ответом
                             return _buildLoadedBall(fetched.answer);
                           },
-                          //отображение шара с ошибкой
                           error: (error) {
+                            //отображение шара с ошибкой
                             return _buildErrorBall();
                           },
                         );
                       },
                     ),
                   ),
-                  const Spacer(),
+
                   SizedBox(
                     width: MediaQuery.of(context).size.width - 150,
                     child: const Text(
@@ -122,7 +132,10 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
                       ),
                     ),
                   ),
-                  const Spacer()
+                  SizedBox(
+                    height: 20,
+                  )
+                  // const Spacer()
                 ],
               ),
             ),
@@ -132,6 +145,20 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
 
   Widget _buildLoadedBall(AnswerModel? answer) {
     return Builder(builder: (context) {
+      //получение ответа по трясению
+      ShakeDetector.autoStart(
+        onPhoneShake: () {
+          //отправить событие в блок
+          context.read<AnswerBloc>().add(
+                const AnswerEvent.fetchData(),
+              );
+        },
+        minimumShakeCount: 1,
+        shakeSlopTimeMS: 500,
+        shakeCountResetTime: 3000,
+        shakeThresholdGravity: 2.7,
+      );
+      //получение ответа по тапу
       return GestureDetector(
           onTap: () {
             context.read<AnswerBloc>().add(
@@ -143,8 +170,8 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
             opacity: _fadeAnimation.value,
             child: Column(
               children: [
-                const SizedBox(
-                  height: 100,
+                SizedBox(
+                  height: _floatAnimation.value * 20,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width - 20,
@@ -167,7 +194,6 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
                           answer!.text,
                           style: const TextStyle(
                             color: Color(0xFF99E0FF),
-
                             fontSize: 20,
                           ),
                         ),
@@ -188,6 +214,20 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
 
   Widget _buildInitialBall() {
     return Builder(builder: (context) {
+      //получение ответа по трясению
+      ShakeDetector.autoStart(
+        onPhoneShake: () {
+          //отправить событие в блок
+          context.read<AnswerBloc>().add(
+                const AnswerEvent.fetchData(),
+              );
+        },
+        minimumShakeCount: 1,
+        shakeSlopTimeMS: 500,
+        shakeCountResetTime: 3000,
+        shakeThresholdGravity: 2.7,
+      );
+      //получение ответа по тапу
       return GestureDetector(
         onTap: () {
           context.read<AnswerBloc>().add(
@@ -199,8 +239,8 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
           opacity: _fadeAnimation.value,
           child: Column(
             children: [
-              const SizedBox(
-                height: 100,
+              SizedBox(
+                height: _floatAnimation.value * 20,
               ),
               Container(
                 width: MediaQuery.of(context).size.width - 20,
@@ -210,6 +250,9 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
                     image: AssetImage('lib/assets/magic_ball_initial.png'),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: _floatAnimation.value * 10,
               ),
               SizedBox(
                 width: 300,
@@ -225,6 +268,20 @@ class _MagicBallScreenState extends State<MagicBallScreen> with SingleTickerProv
 
   Widget _buildErrorBall() {
     return Builder(builder: (context) {
+      //получение ответа по трясению
+      ShakeDetector.autoStart(
+        onPhoneShake: () {
+          //отправить событие в блок
+          context.read<AnswerBloc>().add(
+                const AnswerEvent.fetchData(),
+              );
+        },
+        minimumShakeCount: 1,
+        shakeSlopTimeMS: 500,
+        shakeCountResetTime: 3000,
+        shakeThresholdGravity: 2.7,
+      );
+      //получение ответа по тапу
       return GestureDetector(
         onTap: () {
           context.read<AnswerBloc>().add(

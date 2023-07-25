@@ -1,5 +1,6 @@
 part of 'answer_bloc.dart';
 
+//состояния для блока получения данных ответа
 @freezed
 class AnswerState with _$AnswerState {
   const factory AnswerState.loading() = _Loading;

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'answer_response.freezed.dart';
 part 'answer_response.g.dart';
 
+//ответ на запрос с freezed аннотациями
 @freezed
 class AnswerResponse with _$AnswerResponse {
   const factory AnswerResponse({required List<AnswerDto> children}) =

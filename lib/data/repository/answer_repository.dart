@@ -1,6 +1,7 @@
 import '../datasource/answer_remote_datasource.dart';
 import '../model/answer_model.dart';
 
+//репозиторий для получения данных ответа
 class AnswerRepository {
   final AnswerRemoteDatasource _remoteDatasource;
 
